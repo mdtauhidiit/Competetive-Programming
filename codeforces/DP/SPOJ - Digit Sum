@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+
+int dp[20][180][2];
+
+int f(int i,int x,bool tight,string &nums){
+   int n=nums.size();
+   if(i==n) return x;
+   if(dp[i][x][tight]!=-1) return dp[i][x][tight];
+   int ub=(tight)?(nums[i]-'0'):9LL;
+   int ans=0;
+   for(int j=0;j<=ub;j++){
+      ans+=f(i+1,x+j,tight&(ub==j),nums);
+   }
+   return dp[i][x][tight]=ans;
+}
+
+int32_t main(){
+   
+   ios_base::sync_with_stdio(0);
+   cin.tie(0);
+   cout.tie(0);
+   
+   int t; cin>>t;
+   while(t--){
+      int l,r; cin>>l>>r;
+      string s1=to_string(r);
+      string s2=to_string(l-1);
+      memset(dp,-1,sizeof(dp));
+      int ans1=f(0,0,1,s1);
+      memset(dp,-1,sizeof(dp));
+      int ans2=f(0,0,1,s2);
+      cout<<ans1-ans2<<'\n';
+   }
+   
+   
+return 0;
+}
+
